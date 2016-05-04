@@ -1,11 +1,12 @@
 alphabet = ("a" .. "z")
-vowels = {}
+vowels_index = {}
+vowels = ['a', 'e', 'i', 'o', 'u', 'y']
 
 alphabet.each_with_index do |key, val|
-	vowels[key] = val + 1 if %w[a e i o u y].include?(key)
+	vowels_index[key] = val + 1 if vowels.include?(key)
 end
 
-vowels.each{|key, value| print key, "-", value, " "}
+vowels_index.each{|key, value| print key, "-", value, " "}
 
 
 
