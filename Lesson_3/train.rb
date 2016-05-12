@@ -1,14 +1,14 @@
 class Train  < Route
-	@@arr_station = []
-	@@index = 0
-
-	attr_reader :railcars
-	attr_accessor :speed
+	
+	attr_reader :railcars, :number
+	attr_accessor :speed, :arr_station
 	
 	def initialize (number, type, railcars)
 		@speed = 0
 		@railcars = railcars.to_i
-
+		@arr_station = []
+		@index = 0
+		@i = 0
 	end
 
 	def move
@@ -30,24 +30,22 @@ class Train  < Route
 		end	
 	end
 
-	def get_route
-		@@arr_station = @@routed
-		puts @@arr_station 
+	def get_route=(rout)
+		@arr_station = rout.instance_variable_get('@routed')
+		@i = @arr_station.size - 1
+		puts @arr_station
 	end
 
 	def run (direction)
-		@@index +=1 if direction == 'to' && @@index < @@i		
-		@@index -=1 if direction == 'back' && @@index > 0	
-		print @@arr_station[@@index]
-		puts ' - end station, reverse direction' if @@index == @@i || @@index == 0
+		@index +=1 if direction == 'to' && @index < @i		
+		@index -=1 if direction == 'back' && @index > 0	
+		puts @arr_station[@index]
+		puts ' - end station, reverse direction' if @index == @i || @index == 0
 	end
 
 	def now
-		puts "The previous station - #{@@arr_station[@@index-1]}"
-		puts "The current station - #{@@arr_station[@@index]}"
-		puts "The next station - #{@@arr_station[@@index+1]}"
+		puts "The previous station - #{@arr_station[@index-1]}"
+		puts "The current station - #{@arr_station[@index]}"
+		puts "The next station - #{@arr_station[@index+1]}"
 	end
-
-
-	
 end
