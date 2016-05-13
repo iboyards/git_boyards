@@ -19,33 +19,53 @@ class Train  < Route
 		self.speed = 0
 	end
 
-	
-	def hook_unhook (action)
+	def hook_car
 		if @speed == 0
-			@railcars += 1 if action == 'hook'						
-			@railcars -=1 if action == 'unhook'	
-			puts @railcars		
+			@railcars += 1
 		else
 			puts "Please, stop the train"
-		end	
+		end
 	end
 
-	def get_route=(rout)
-		@arr_station = rout.instance_variable_get('@routed')
+	def unhook_car
+		if @speed == 0 && @railcars > 1
+			@railcars -= 1
+		elsif @speed >0 
+			puts "Please, stop the train"
+		elsif @railcars == 1
+			puts "It is impossible to unhook last car"
+		end
+	end	
+
+	def get_route=(route)
+		@arr_station = route.instance_variable_get('@stations')
 		@i = @arr_station.size - 1
 		puts @arr_station
 	end
+	
+	def run_to 
+		@index +=1 if @index < @i		
+		print @arr_station[@index]
+		puts ' - end station, reverse direction' if @index == @i
+	end
 
-	def run (direction)
-		@index +=1 if direction == 'to' && @index < @i		
-		@index -=1 if direction == 'back' && @index > 0	
-		puts @arr_station[@index]
-		puts ' - end station, reverse direction' if @index == @i || @index == 0
+	def run_back 
+		@index -=1 if @index > 0		
+		print @arr_station[@index]
+		puts ' - end station, reverse direction' if @index == 0
 	end
 
 	def now
-		puts "The previous station - #{@arr_station[@index-1]}"
+		if (@index+1) > @i
+			puts "The next station - #{@arr_station[@index-1]}"
+		else
+			puts "The current station is the last" 
+		end
 		puts "The current station - #{@arr_station[@index]}"
-		puts "The next station - #{@arr_station[@index+1]}"
+		if (@index+1) < @i
+			puts "The next station - #{@arr_station[@index+1]}"
+		else
+			puts "The current station is the last" 
+		end
 	end
 end
