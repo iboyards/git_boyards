@@ -4,13 +4,12 @@ class Route
 
 	def initialize(first_st, last_st)
 		@stations = []	
-		@i = 1	
+		@i = -2
 		@stations << first_st << last_st
 	end
   
 	def add(station)
 		@stations.insert(@i,station)
-		@i = @stations.size 
 	end
 
 	def del(station)
