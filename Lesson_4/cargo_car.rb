@@ -1,9 +1,3 @@
-class CargoCar < CargoTrain
+class CargoCar < Railcar
 
-
-	attr_accessor :type_car
-
-	def initialize 
-		@type_car = 'cargo'
-	end 		
 end

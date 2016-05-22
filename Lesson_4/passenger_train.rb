@@ -1,6 +1,6 @@
 class PassengerTrain < Train
 
-	def initialize(number, type = 'pass', railcars)		
-		super
-	end	
+	def type
+		'pass'
+	end
 end

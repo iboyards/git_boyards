@@ -1,10 +1,10 @@
-class Train  < Route
+class Train < Route
 	
-	attr_reader  :number
-	attr_accessor :railcars, :speed, :arr_station, :arr_trains
+	attr_reader  :number, :railcars, :speed, :arr_station, :arr_trains, :type
+	#attr_accessor :railcars, :speed, :arr_station, :arr_trains, :type, :route
 	def initialize (number, type, railcars)
 		@speed = 0
-		@railcars = railcars.to_i
+		@railcars = railcars
 		@arr_station = []
 		@index = 0
 		@i = 0
@@ -21,30 +21,13 @@ class Train  < Route
 		self.speed = 0
 	end
 
-	def hook=(car)
-		if @speed == 0 && car.type_car == 'cargo' && @type == 'cargo'
-			@railcars += 1
-		elsif @speed == 0 && car.type_car == 'pass' && @type == 'pass'
-			@railcars += 1
-		elsif @speed > 0
-			puts "Please, stop the train"
-		else
-			puts "Check the type of the car"
-		end
-		
+	def hook(car)
+		self.railcars +=1 if speed == 0 && acceptable?(car)
 	end
 
-	def unhook=(car)
-		if @speed == 0 && @railcars > 1 && car.type_car == 'cargo' && @type == 'cargo'
-			@railcars -= 1
-		elsif @speed == 0 && @railcars > 1	&& car.type_car == 'pass' && @type == 'pass'
-			@railcars -= 1
-		elsif @speed >0 
-			puts "Please, stop the train"
-		elsif @railcars == 1
-			puts "It is impossible to unhook last car"
-		end
-	end	
+	def unhook(car)
+		self.railcars -=1 if speed == 0 && acceptable?(car)
+	end
 
 	def get_route=(route)
 		@arr_station = route.instance_variable_get('@stations')
@@ -75,11 +58,26 @@ class Train  < Route
 			puts "The next station - #{@arr_station[@index+1]}"
 		else
 			puts "The current station is the last" 
-		end
+		end		
+	end
 
-		def info
+	def info
 		@info_train[@number] = {type: @type, wagons: @railcars}
 		puts @info_train
-		end
 	end
+
+	protected
+
+	def acceptable?(car)
+    car_type =
+      case self.type
+      when "cargo"
+        CargoCar
+      when "pass"
+        PassengerCar
+      else
+        Car
+      end
+    car.class == car_type
+    end	
 end
