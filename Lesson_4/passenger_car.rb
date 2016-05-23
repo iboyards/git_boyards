@@ -1,3 +1,5 @@
 class PassengerCar < Railcar
 
+
+
 end

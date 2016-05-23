@@ -1,7 +1,8 @@
 class Train < Route
 	
-	attr_reader  :number, :railcars, :speed, :arr_station, :arr_trains, :type
-	#attr_accessor :railcars, :speed, :arr_station, :arr_trains, :type, :route
+	attr_reader  :number, :railcars, :speed
+	
+	attr_accessor :railcars, :speed, :arr_station, :arr_trains, :route, :type
 	def initialize (number, type, railcars)
 		@speed = 0
 		@railcars = railcars
@@ -14,7 +15,7 @@ class Train < Route
 	end	
 
 	def move
-		self.speed = @speed + 10
+		self.speed += 10 
 	end
 
 	def stop
@@ -66,18 +67,4 @@ class Train < Route
 		puts @info_train
 	end
 
-	protected
-
-	def acceptable?(car)
-    car_type =
-      case self.type
-      when "cargo"
-        CargoCar
-      when "pass"
-        PassengerCar
-      else
-        Car
-      end
-    car.class == car_type
-    end	
 end
