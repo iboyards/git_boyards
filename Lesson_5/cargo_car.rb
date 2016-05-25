@@ -1,0 +1,4 @@
+class CargoCar < Railcar
+
+	
+end
