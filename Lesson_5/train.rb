@@ -5,7 +5,7 @@ class Train < Route
   @@arr_trains = {}
 
   def self.find(train)
-    @@arr_trains.values_at(train)
+    @@arr_trains[train]
   end
 
     
