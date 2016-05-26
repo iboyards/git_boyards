@@ -1,5 +1,7 @@
 module Vendor
 
+  attr_accessor :code
+
   def vendor(code)
     self.code = code    
   end
@@ -7,8 +9,5 @@ module Vendor
   def vendor?
     puts self.code
   end
-
-  protected
-
-  attr_accessor :code
+ 
 end

@@ -2,10 +2,10 @@ class Train < Route
 
   include Vendor
 
-  @@arr_trains = [nil]
+  @@arr_trains = {}
 
   def self.find(train)
-    @@arr_trains.bsearch{|a| a == train}
+    @@arr_trains.values_at(train)
   end
 
     
@@ -21,7 +21,7 @@ class Train < Route
     @info_train = {}
     @type = type
     @number = number
-    @@arr_trains << @number
+    @@arr_trains[@number] = self
   end 
 
   def move

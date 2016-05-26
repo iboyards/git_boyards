@@ -3,18 +3,20 @@ class RailwayStation
 
   attr_accessor :name
 
-  @@all_st = []
+  #@@all_st = []
 
   def self.all
-    @@all_st
+    #@@all_st
+     ObjectSpace.each_object(self) { |station| puts station.name }
   end
 
-  
+
+
   def initialize(name)
     @name = name
     @amount = {'cargo': 0, 'pass': 0}
     @train_list = {}  
-    @@all_st << name
+    #@@all_st << self
   end
 
   def train_arrival(type, name)
