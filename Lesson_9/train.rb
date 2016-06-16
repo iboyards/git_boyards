@@ -4,8 +4,7 @@ require './acessors.rb'
 require './validation.rb'
 
 class Train < Route
-  include Vendor
-  include Accessors
+  include Vendor  
   include Validation
 
   @@arr_trains = {}
@@ -13,6 +12,8 @@ class Train < Route
   NUMBER_FORMAT = /^\w{3}(-?)\w{2}$/
   TYPE_TRAIN_FORMAT = /((cargo)|(pass))/
   RAILCARS_FORMAT = /\d*/
+
+  
 
   attr_reader :number
   attr_accessor :speed, :arr_station, :route, :railcars, :type, :wagons

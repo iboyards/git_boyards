@@ -1,4 +1,3 @@
-
 module Validation
   def self.included(base)
     base.extend ClassMethods
@@ -6,41 +5,41 @@ module Validation
   end
 
   module ClassMethods
-    def validate(*args)
-      @validation_params ||= {}
-      @validation_params[args.shift] = args
+    def validate(name, *args)
+      @validates ||= {}
+      @validates[name] = *args      
     end
   end
 
   module InstanceMethods
     def validate!
-      item = self.class.instance_variables.include?(:@validation_params) ?
-      self.class : self.class.superclass
-      item.instance_variable_get(:@validation_params).each do |key, value|
-        var = instance_variable_get("@#{key}".to_sym)
-        send value[0].to_sym, var, value
+      valid_variables = self.class.instance_variable_get("@validates")       
+      valid_variables.each do |name, args|
+        @name_value = instance_variable_get("@#{name}")
+        @provision = args[1]
+        send args[0]    
       end
-      true
     end
 
     def valid?
       validate!
-    rescue
+    rescue RuntimeError
       false
     end
 
-    protected
-
-    def presence(var, value)
-      raise ValidationError if var.nil? || var.empty?
+    def presence
+      raise ArgumentError,'value is nil or empty' if @name_value.nil? || @name_value == ' '      
+      true
     end
 
-    def format(var, value)
-      raise "Invalid format" if value[1] !~ var
+    def format      
+      raise ArgumentError, "wrong format" if @name_value !~ @provision
+      true
     end
 
-    def v_type(var, value)
-      raise "Invalid type" unless var.is_a? value[1]
+    def v_type
+      raise ArgumentError, "wrong type is not #{@provision}" if @name_value.class != @provision
+      true
     end
   end
 end
